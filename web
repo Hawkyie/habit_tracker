@@ -1,0 +1,65 @@
+# Flask web app (routes only as stubs; no logic)
+
+
+from flask import Flask, render_template, request, redirect, url_for
+
+
+# TODO: import storage + models when implemented
+# from .storage import JsonHabitStorage
+# from .models import Habit
+
+
+
+
+def create_app() -> Flask:
+    app = Flask(__name__)
+
+
+@app.get("/")
+def index():
+# TODO: load habits, compute computed fields, render index.html
+    return render_template("index.html", habits=[])
+
+
+@app.get("/create")
+def create_form():
+# TODO: show edit form
+    return render_template("edit.html", habit=None)
+
+
+@app.post("/create")
+def create_submit():
+# TODO: build Habit from form, save, redirect
+    return redirect(url_for("index"))
+
+
+@app.get("/edit/<habit_id>")
+def edit_form(habit_id: str):
+# TODO: fetch habit, render form
+    return render_template("edit.html", habit=None)
+
+
+@app.post("/edit/<habit_id>")
+def edit_submit(habit_id: str):
+# TODO: update habit, redirect
+    return redirect(url_for("index"))
+
+
+@app.post("/toggle/<habit_id>")
+def toggle_today(habit_id: str):
+# TODO: mark today complete/not complete, update streak
+    return redirect(url_for("index"))
+
+
+@app.post("/delete/<habit_id>")
+def delete(habit_id: str):
+# TODO: remove habit
+    return redirect(url_for("index"))
+
+
+return app
+
+
+if __name__ == "__main__":
+# TODO: create app and run
+    pass

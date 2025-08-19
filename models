@@ -1,0 +1,18 @@
+from dataclasses import dataclass
+from typing import Optional, List
+from .utils import make_id, now_iso_datetime, today_iso_date
+
+
+@dataclass
+class Habit:
+    id: str
+    name: str
+    description: str
+    created_at: str
+    last_checked: Optional[str]
+    streak: int
+    history: List[str]
+    active: bool
+
+
+# TODO: add __post_init__ if you want simple field assertions (optional)

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<form class="form" method="post" aria-label="Habit form">
+<label>
+Name
+<input name="name" required maxlength="80" value="{{ habit.name if habit else '' }}" />
+</label>
+<label>
+Description
+<textarea name="description">{{ habit.description if habit else '' }}</textarea>
+</label>
+<button type="submit">Save</button>
+</form>
+{% endblock %}

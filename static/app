@@ -1,0 +1,10 @@
+* { box-sizing: border-box; }
+body { font: 16px/1.5 system-ui, sans-serif; margin: 0; padding: 0; }
+header, main { max-width: 900px; margin: 0 auto; padding: 1rem; }
+nav a { margin-right: .5rem; }
+.btn, button { padding: .5rem .75rem; border: 1px solid #0a66c2; background: #fff; border-radius: .5rem; cursor: pointer; }
+button.danger { border-color: #c20a0a; }
+.grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); }
+.card { border: 1px solid #ddd; border-radius: .75rem; padding: 1rem; }
+.controls { margin: .5rem 0 1rem; }
+:focus { outline: 2px solid #0a66c2; outline-offset: 2px; }
