@@ -17,11 +17,6 @@ def make_id(prefix: str = "hb") -> str:
     prepend = prefix + "_"
     return prepend + "".join(random.choices(string.ascii_lowercase, k=6))
 
-
-
-# TODO: compute consecutive-day streak ending at today from history dates
-
-
 def compute_streak(history: List[str], today: str) -> int:
     today_date = date.fromisoformat(today)
 
@@ -38,9 +33,6 @@ def compute_streak(history: List[str], today: str) -> int:
         streak += 1
         current -= timedelta(days=1)
     return streak
-
-# TODO: adherence in last n days (0..1)
-
 
 def adherence(history: List[str], today: str, days: int = 30) -> float:
     today_date = date.fromisoformat(today)
