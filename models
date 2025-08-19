@@ -16,3 +16,8 @@ class Habit:
 
 
 # TODO: add __post_init__ if you want simple field assertions (optional)
+def __post_init__(self):
+    if not self.id:                # if no id provided
+        self.id = make_id()        # generate one
+    if not self.created_at:        # if no creation time provided
+        self.created_at = now_iso_datetime()
