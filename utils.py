@@ -2,12 +2,10 @@ from typing import List
 from datetime import date, datetime, timedelta
 
 def today_iso_date() -> str:
-    from datetime import datetime
     return datetime.today().strftime("%Y-%m-%d")
 
 
 def now_iso_datetime() -> str:
-    from datetime import datetime
     return datetime.now().isoformat(timespec='seconds')
 
 
@@ -46,9 +44,11 @@ def adherence(history: List[str], today: str, days: int = 30) -> float:
 
     current = today_date
 
+    if days <= 0:
+        return 0.0
+    
     for _ in range(days):
         if current in history_dates:
             counter += 1
-            current -= timedelta(days=1)
-    adherence = counter / days
-    return adherence
+        current -= timedelta(days=1)
+    return counter / days
