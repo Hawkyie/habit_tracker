@@ -2,14 +2,11 @@ from storage.json_store import init_store, load_data, save_data
 from models.habit import create_habit, mark_done
 import utils
 
-
-
 init_store()
 habits = load_data()
 today_date = utils.today_iso_date()
 
 def add_habit():
-
     name = input("Please enter the name of the habit: ").strip()
     if not name:
         print("You must enter a name: ")

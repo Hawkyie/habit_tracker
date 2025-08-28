@@ -1,17 +1,29 @@
-def create_habit(habit_id: str, name: str, description: str):
+import utils
+
+def create_habit(habit_id, name, description):
     new_dict = {
-    "habit_id": "hb_abcdef",
-    "name": "Hydrate",
-    "description": "Drink your body weight in water",
-    "created_at": "2025-08-20T14:22:00",
+    "id": habit_id,
+    "name": name,
+    "description": description,
+    "created_at": utils.today_iso_date(),
     "last_checked": None,
     "history": [],
     "streak": 0,
     "active": True
     }
+    return new_dict
 
-def mark_done():
-    pass
+def mark_done(habit, on_date):
+    if on_date in habit["history"]:
+        return "already_done"
+    else:
+        habit["history"].append(on_date)
+        habit["last_checked"] = on_date
+        habit["streak"] = utils.compute_streak(habit["history"], on_date)
+        return "done"
+    
+
+
 
 def recalculate_streak():
     pass

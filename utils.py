@@ -9,13 +9,13 @@ def now_iso_datetime() -> str:
     return datetime.now().isoformat(timespec='seconds')
 
 
-def make_id(prefix: str = "hb") -> str:
+def make_id(prefix: str = "hb")
     import random
     import string
     prepend = prefix + "_"
     return prepend + "".join(random.choices(string.ascii_lowercase, k=6))
 
-def compute_streak(history: List[str], today: str) -> int:
+def compute_streak(history, today):
     today_date = date.fromisoformat(today)
 
     history_dates = set()
@@ -32,7 +32,7 @@ def compute_streak(history: List[str], today: str) -> int:
         current -= timedelta(days=1)
     return streak
 
-def adherence(history: List[str], today: str, days: int = 30) -> float:
+def adherence(history, today, days):
     today_date = date.fromisoformat(today)
     history_dates = set()
     counter = 0
