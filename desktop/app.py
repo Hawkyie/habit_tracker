@@ -53,7 +53,7 @@ root.config(menu=menubar)
 file_menu = tk.Menu(menubar)
 
 toolbar = tk.Frame(root)
-toolbar.pack(side=tk.LEFT, fill=tk.X)
+toolbar.pack(side=tk.TOP, fill=tk.X)
 add_habit_button = tk.Button(toolbar,
                              text="Add Habit",
                              command=add_habit_button_clicked,
@@ -62,11 +62,6 @@ add_habit_button = tk.Button(toolbar,
                              cursor="hand2")
 
 add_habit_button.pack(padx=20, pady=20)
-
-
-
-
-    
 
 tablearea = tk.Frame(root)
 tablearea.pack(fill=tk.BOTH, expand=True)

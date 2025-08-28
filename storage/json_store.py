@@ -1,7 +1,6 @@
 import json
 from pathlib import Path
 
-
 DATA_FILE = Path(__file__).parent /  "habits.json"
 DATA_FILE = DATA_FILE.resolve()
 
@@ -38,19 +37,3 @@ def init_store():
     if not DATA_FILE.exists():
         with DATA_FILE.open('w', encoding='utf-8') as f:
             json.dump([], f, ensure_ascii=False, indent=2)
-
-    
-    
-
-
-
-
-
-class JsonHabitStorage:
-    def __init__(self, path: str | Path): ... # TODO: remember file path
-    def init(self) -> None: ... # TODO: create file if missing
-    def list(self) -> List[Habit]: ... # TODO: load all habits
-    def get(self, id: str) -> Optional[Habit]: ...
-    def create(self, habit: Habit) -> str: ... # TODO: append + persist
-    def update(self, habit: Habit) -> None: ... # TODO: replace by id + persist
-    def delete(self, id: str) -> None: ...

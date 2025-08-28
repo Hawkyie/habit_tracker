@@ -9,7 +9,7 @@ def now_iso_datetime() -> str:
     return datetime.now().isoformat(timespec='seconds')
 
 
-def make_id(prefix: str = "hb")
+def make_id(prefix: str = "hb"):
     import random
     import string
     prepend = prefix + "_"
