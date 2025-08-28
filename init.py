@@ -12,7 +12,7 @@ def add_habit():
         print("You must enter a name: ")
         return
     
-    description = input("Please enter a description for the task").strip()
+    description = input("Please enter a description for the habit").strip()
     if not description:
         description = "No description"
 
@@ -40,7 +40,7 @@ def mark_done_today():
         return
     list_habits()
     selection = input("Please select a Habit to mark as completed").strip()
-    if selection.lower() == "q": return()
+    if selection.lower() == "q": return
     if not selection.isdigit():
         print("You must select a number")
         return
@@ -56,9 +56,3 @@ def mark_done_today():
     else: 
         print("Marked complete for today")
     list_habits()
-
-
-
-
-
-
