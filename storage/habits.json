@@ -1,42 +1,31 @@
 [
   {
-    "id": "hb_bdehdm",
-    "name": "Finger girlfriend",
-    "description": "plop",
-    "created_at": "2025-08-28",
-    "last_checked": null,
-    "history": [],
-    "streak": 0,
+    "id": "hb_zacoce",
+    "name": "Learn to code",
+    "description": "I'm trying Cher",
+    "created_at": "2025-08-29",
+    "last_checked": "2025-08-29",
+    "history": [
+      "2025-08-24",
+      "2025-08-25",
+      "2025-08-26",
+      "2025-08-27",
+      "2025-08-28",
+      "2025-08-29"
+    ],
+    "streak": 6,
     "active": true
   },
   {
-    "id": "hb_oaapgd",
-    "name": "Test",
-    "description": "Tetst",
-    "created_at": "2025-08-28",
-    "last_checked": null,
-    "history": [],
-    "streak": 0,
-    "active": true
-  },
-  {
-    "id": "hb_cavkau",
-    "name": "Plop",
-    "description": "plop",
-    "created_at": "2025-08-28",
-    "last_checked": null,
-    "history": [],
-    "streak": 0,
-    "active": true
-  },
-  {
-    "id": "hb_bljpcq",
-    "name": "plopper",
-    "description": "plopper",
-    "created_at": "2025-08-28",
-    "last_checked": null,
-    "history": [],
-    "streak": 0,
-    "active": true
+    "id": "hb_csjlyf",
+    "name": "The tester v3",
+    "description": "Testing 123",
+    "created_at": "2025-08-29",
+    "last_checked": "2025-08-29",
+    "history": [
+      "2025-08-29"
+    ],
+    "streak": 1,
+    "active": false
   }
 ]
