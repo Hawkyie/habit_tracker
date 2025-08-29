@@ -9,30 +9,6 @@ init_store()
 habits = load_data()
 today = utils.today_iso_date()
 
-def on_selection_change(event=None):
-    selected_items = tatree.selection()
-
-    if selected_items:
-        done_btn.config(state=tk.NORMAL)
-        edit_btn.config(state=tk.NORMAL)
-        tgl_btn.config(state=tk.NORMAL)
-        del_btn.config(state=tk.NORMAL)
-    else:
-        done_btn.config(state=tk.DISABLED)
-        edit_btn.config(state=tk.DISABLED)
-        tgl_btn.config(state=tk.DISABLED)
-        del_btn.config(state=tk.DISABLED)
-
-    if selected_items and len(selected_items) == 1:
-        iid = selected_items[0]
-        habit = next((h for h in habits if h.get("id") == iid), None)
-        set_description(habit.get("description", "") if habit else "")
-    elif selected_items:
-        set_description("Multiple items selected.")
-    else:
-        set_description("Select a habit to see details.")
-
-
 def add_btn_clicked():
     name = simpledialog.askstring("Add a Habit", "Please enter a name for your habit", parent=root)
     if name is None:
@@ -68,6 +44,7 @@ def add_btn_clicked():
     tatree.selection_set(item_id)
     tatree.focus(item_id)
     tatree.see(item_id)
+    set_description(create_habit_dict.get("description",""))
 
     refresh_total_habit()
     save_data(habits)
@@ -119,6 +96,7 @@ def edit_btn_clicked():
         return
     habit["description"] = description.strip() or "No description"
     
+    set_description(habit["description"])
     save_data(habits)
 
 def tgl_btn_clicked():
@@ -169,6 +147,29 @@ def set_description(text: str):
     description_text.delete("1.0", "end")
     description_text.insert("1.0", text or "")
     description_text.configure(state="disabled")
+
+def on_selection_change(event=None):
+    selected_items = tatree.selection()
+
+    if selected_items:
+        done_btn.config(state=tk.NORMAL)
+        edit_btn.config(state=tk.NORMAL)
+        tgl_btn.config(state=tk.NORMAL)
+        del_btn.config(state=tk.NORMAL)
+    else:
+        done_btn.config(state=tk.DISABLED)
+        edit_btn.config(state=tk.DISABLED)
+        tgl_btn.config(state=tk.DISABLED)
+        del_btn.config(state=tk.DISABLED)
+
+    if selected_items and len(selected_items) == 1:
+        iid = selected_items[0]
+        habit = next((h for h in habits if h.get("id") == iid), None)
+        set_description(habit.get("description", "") if habit else "")
+    elif selected_items:
+        set_description("Multiple items selected.")
+    else:
+        set_description("Select a habit to see details.")
 
 root = tk.Tk()
 root.title("HabitTracker")
