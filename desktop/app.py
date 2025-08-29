@@ -34,7 +34,6 @@ def add_btn_clicked():
     habits.append(create_habit_dict)
     tick = "✓" if today in create_habit_dict.get("history", []) else "•"
     active_text = "Yes" if create_habit_dict.get("active", True) else "No"
-
     tatree.insert(
     "", "end",
     iid=create_habit_dict["id"],
@@ -55,7 +54,6 @@ def done_btn_clicked():
         messagebox.showinfo("Nothing selected", "You didn't select anything", parent=root)
         return
     
-    marked = skipped = 0
     for iid in selected_items:
         habit = next((h for h in habits if h.get("id") == iid), None)
         if habit is None:
@@ -65,9 +63,6 @@ def done_btn_clicked():
         if status == "done":
             tatree.set(iid, "today", "✓")
             tatree.set(iid, "streak", habit.get("streak", 0))
-            marked += 1
-        else:
-            skipped += 1
     
     save_data(habits)
 
@@ -148,29 +143,6 @@ def set_description(text: str):
     description_text.insert("1.0", text or "")
     description_text.configure(state="disabled")
 
-def on_selection_change(event=None):
-    selected_items = tatree.selection()
-
-    if selected_items:
-        done_btn.config(state=tk.NORMAL)
-        edit_btn.config(state=tk.NORMAL)
-        tgl_btn.config(state=tk.NORMAL)
-        del_btn.config(state=tk.NORMAL)
-    else:
-        done_btn.config(state=tk.DISABLED)
-        edit_btn.config(state=tk.DISABLED)
-        tgl_btn.config(state=tk.DISABLED)
-        del_btn.config(state=tk.DISABLED)
-
-    if selected_items and len(selected_items) == 1:
-        iid = selected_items[0]
-        habit = next((h for h in habits if h.get("id") == iid), None)
-        set_description(habit.get("description", "") if habit else "")
-    elif selected_items:
-        set_description("Multiple items selected.")
-    else:
-        set_description("Select a habit to see details.")
-
 root = tk.Tk()
 root.title("HabitTracker")
 root.geometry("800x800")
@@ -236,6 +208,29 @@ save_btn = tk.Button(btn_row,
                      cursor="hand2")
 save_btn.pack(side=tk.LEFT, padx=16, pady=6)
 
+def on_selection_change(event=None):
+    selected_items = tatree.selection()
+
+    if selected_items:
+        done_btn.config(state=tk.NORMAL)
+        edit_btn.config(state=tk.NORMAL)
+        tgl_btn.config(state=tk.NORMAL)
+        del_btn.config(state=tk.NORMAL)
+    else:
+        done_btn.config(state=tk.DISABLED)
+        edit_btn.config(state=tk.DISABLED)
+        tgl_btn.config(state=tk.DISABLED)
+        del_btn.config(state=tk.DISABLED)
+
+    if selected_items and len(selected_items) == 1:
+        iid = selected_items[0]
+        habit = next((h for h in habits if h.get("id") == iid), None)
+        set_description(habit.get("description", "") if habit else "")
+    elif selected_items:
+        set_description("Multiple items selected.")
+    else:
+        set_description("Select a habit to see details.")
+
 tablearea = tk.Frame(root)
 tablearea.pack(fill=tk.BOTH, expand=True)
 columns = ("name", "streak", "today", "active")
@@ -254,8 +249,6 @@ for h in habits:
     tick = "✓" if today in h.get("history", []) else "•"
     active_text = "Yes" if h.get("active", True) else "No"
     tatree.insert("", "end", iid=h["id"], values=(h["name"], h.get("streak", 0), tick, active_text))
-tatree.bind("<<TreeviewSelect>>", on_selection_change)
-on_selection_change()
 
 details = ttk.LabelFrame(root, text="Details")
 details.pack(fill=tk.X, padx=8, pady=6)
@@ -266,6 +259,8 @@ description_text.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=8, pady=6)
 description_scroll = ttk.Scrollbar(details, orient="vertical", command=description_text.yview)
 description_text.configure(yscrollcommand=description_scroll.set)
 description_scroll.pack(side=tk.RIGHT, fill=tk.Y)
+tatree.bind("<<TreeviewSelect>>", on_selection_change)
+on_selection_change()
 
 
 tatree.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
