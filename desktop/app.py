@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk, messagebox, simpledialog
+import tkinter.font as tkfont
 
 from storage.json_store import init_store, load_data, save_data
 from models.habit import create_habit, mark_done
@@ -144,6 +145,12 @@ def set_description(text: str):
     description_text.configure(state="disabled")
 
 root = tk.Tk()
+tkfont.nametofont("TkDefaultFont").configure(family="Segoe UI", size=10)
+tkfont.nametofont("TkTextFont").configure(family="Segoe UI", size=10)
+tkfont.nametofont("TkHeadingFont").configure(family="Segoe UI", size=10, weight="bold")
+tkfont.nametofont("TkMenuFont").configure(family="Segoe UI", size=10)
+tkfont.nametofont("TkFixedFont").configure(family="Consolas", size=10)
+
 root.title("HabitTracker")
 root.geometry("800x800")
 root.minsize(800, 800)
@@ -152,66 +159,60 @@ menubar = tk.Menu(root)
 root.config(menu=menubar)
 file_menu = tk.Menu(menubar)
 
-toolbar = tk.Frame(root)
+toolbar = ttk.Frame(root)
 toolbar.pack(side=tk.TOP, fill=tk.X)
-btn_row = tk.Frame(toolbar)
+btn_row = ttk.Frame(toolbar)
 btn_row.pack()
-add_btn = tk.Button(btn_row,
+add_btn = ttk.Button(btn_row,
                     text="Add Habit",
                     command=add_btn_clicked,
-                    activebackground="blue",
-                    activeforeground="white",
                     cursor="hand2")
 add_btn.pack(side=tk.LEFT, padx=16, pady=6)
 
-done_btn = tk.Button(btn_row,
+done_btn = ttk.Button(btn_row,
                      text="Mark done today",
                     state=tk.DISABLED,
                     command=done_btn_clicked,
-                    activebackground="blue",
-                    activeforeground="white",
                     cursor="hand2")
 done_btn.pack(side=tk.LEFT, padx=16, pady=6)
 
-edit_btn = tk.Button(btn_row,
+edit_btn = ttk.Button(btn_row,
                      text="Edit",
                      state=tk.DISABLED,
                      command=edit_btn_clicked,
-                     activebackground="blue",
-                     activeforeground="white",
                      cursor="hand2")
 edit_btn.pack(side=tk.LEFT, padx=16, pady=6)
 
-tgl_btn = tk.Button(btn_row,
+tgl_btn = ttk.Button(btn_row,
                     text="Archive/Unarchive",
                     state=tk.DISABLED,
                     command=tgl_btn_clicked,
-                    activebackground="blue",
-                    activeforeground="white",
                     cursor="hand2")
 tgl_btn.pack(side=tk.LEFT, padx=16, pady=6)
 
-del_btn = tk.Button(btn_row,
+del_btn = ttk.Button(btn_row,
                     text="Delete",
                     state=tk.DISABLED,
                     command=del_btn_clicked,
-                    activebackground="blue",
-                    activeforeground="white",
                     cursor="hand2")
 del_btn.pack(side=tk.LEFT, padx=16, pady=6)
 
-save_btn = tk.Button(btn_row,
+save_btn = ttk.Button(btn_row,
                      text="Save",
                      command=save_btn_clicked,
-                     activebackground="blue",
-                     activeforeground="white",
                      cursor="hand2")
 save_btn.pack(side=tk.LEFT, padx=16, pady=6)
 
 def on_selection_change(event=None):
     selected_items = tatree.selection()
 
-    if selected_items:
+    if selected_items and len(selected_items) > 1:
+        done_btn.config(state=tk.NORMAL)
+        edit_btn.config(state=tk.DISABLED)
+        tgl_btn.config(state=tk.DISABLED)
+        del_btn.config(state=tk.DISABLED)
+
+    elif selected_items and len(selected_items) == 1:
         done_btn.config(state=tk.NORMAL)
         edit_btn.config(state=tk.NORMAL)
         tgl_btn.config(state=tk.NORMAL)
@@ -231,7 +232,7 @@ def on_selection_change(event=None):
     else:
         set_description("Select a habit to see details.")
 
-tablearea = tk.Frame(root)
+tablearea = ttk.Frame(root)
 tablearea.pack(fill=tk.BOTH, expand=True)
 columns = ("name", "streak", "today", "active")
 tatree = ttk.Treeview(tablearea, columns=columns, show="headings")
@@ -243,7 +244,7 @@ tatree.column("name",   width=200, anchor=tk.W, stretch=True)
 tatree.column("streak", width=90,  anchor=tk.CENTER, stretch=False)
 tatree.column("today",  width=90,  anchor=tk.CENTER, stretch=False)
 tatree.column("active", width=110, anchor=tk.CENTER, stretch=False)
-scrollbar = tk.Scrollbar(tablearea, orient="vertical", command=tatree.yview)
+scrollbar = ttk.Scrollbar(tablearea, orient="vertical", command=tatree.yview)
 tatree.configure(yscrollcommand=scrollbar.set)
 for h in habits:
     tick = "✓" if today in h.get("history", []) else "•"
@@ -254,7 +255,8 @@ details = ttk.LabelFrame(root, text="Details")
 details.pack(fill=tk.X, padx=8, pady=6)
 
 description_text = tk.Text(details, height=5, wrap="word", borderwidth=0)
-description_text.configure(state="disabled")
+details_font = tkfont.Font(family="Segoe UI", size=10)
+description_text.configure(state="disabled", font=details_font)
 description_text.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=8, pady=6)
 description_scroll = ttk.Scrollbar(details, orient="vertical", command=description_text.yview)
 description_text.configure(yscrollcommand=description_scroll.set)
@@ -262,31 +264,31 @@ description_scroll.pack(side=tk.RIGHT, fill=tk.Y)
 tatree.bind("<<TreeviewSelect>>", on_selection_change)
 on_selection_change()
 
-
 tatree.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
 
-statusbar = tk.Frame(root)
+statusbar = ttk.Frame(root)
 statusbar.pack( side=tk.BOTTOM, fill=tk.X)
 save_var = tk.StringVar()
-tk.Label(statusbar, textvariable=save_var, anchor="w").pack(side=tk.RIGHT, padx=8, pady=4)
+ttk.Label(statusbar, textvariable=save_var, anchor="w").pack(side=tk.RIGHT, padx=8, pady=4)
 total_var = tk.StringVar()
-tk.Label(statusbar, textvariable=total_var, anchor="w").pack(side=tk.LEFT, padx=8, pady=4)
+ttk.Label(statusbar, textvariable=total_var, anchor="w").pack(side=tk.LEFT, padx=8, pady=4)
 
 def refresh_total_habit():
     total_var.set(f"Total Habits: {len(habits)}")
 
 refresh_total_habit()
 
-file_menu.add_command(
-    label="Exit",
-    command=root.destroy,
-)
-
 menubar.add_cascade(
     label="File",
     menu=file_menu,
     underline=0
 )
+
+file_menu.add_command(
+    label="Exit",
+    command=root.destroy,
+)
+
 
 root.mainloop()
