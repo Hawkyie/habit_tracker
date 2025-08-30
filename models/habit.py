@@ -22,9 +22,6 @@ def mark_done(habit, on_date):
         habit["streak"] = utils.compute_streak(habit["history"], on_date)
         return "done"
     
-
-
-
 def recalculate_streak():
     pass
 
